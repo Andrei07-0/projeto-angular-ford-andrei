@@ -10,5 +10,8 @@ import { AuthService } from '../../services/auth.service';
 })
 export class HomeComponent {
   private auth = inject(AuthService);
-  logout() { this.auth.logout(); }
+  logout() { 
+    localStorage.setItem('logged', 'false');
+    this.auth.logout(); 
+  }
 }

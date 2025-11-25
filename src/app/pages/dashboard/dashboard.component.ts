@@ -1,7 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common'; // <--- Importante para *ngIf, *ngFor, Pipes
-import { FormBuilder, ReactiveFormsModule, FormControl } from '@angular/forms'; // <--- Importante para formControl
-import { RouterLink } from '@angular/router'; // <--- Importante para o botão Voltar
+import { CommonModule } from '@angular/common'; 
+import { FormBuilder, ReactiveFormsModule, FormControl } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { VehicleService } from '../../services/vehicle.service';
 import { Vehicle, VehicleData } from '../../models/type';
 import { debounceTime, distinctUntilChanged, switchMap, catchError, of, Observable } from 'rxjs';
@@ -9,7 +9,6 @@ import { debounceTime, distinctUntilChanged, switchMap, catchError, of, Observab
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  // AQUI ESTÁ O SEGREDO. SE FALTAR ALGUM DESSES, O HTML QUEBRA:
   imports: [
     CommonModule, 
     ReactiveFormsModule, 
@@ -25,11 +24,10 @@ export class DashboardComponent implements OnInit {
   selectedVehicle: Vehicle | null = null;
 
   vinSearchControl = new FormControl('');
-  vehicleData$!: Observable<VehicleData | null>; // O '!' diz que vamos inicializar depois
+  vehicleData$!: Observable<VehicleData | null>; 
   searchError = false;
 
   ngOnInit() {
-    // 1. Carregar Dropdown
     this.vehicleService.getVehicles().subscribe(res => {
       this.vehicles = res.vehicles;
       if (this.vehicles.length > 0) {
@@ -37,7 +35,6 @@ export class DashboardComponent implements OnInit {
       }
     });
 
-    // 2. Configurar Busca VIN
     this.vehicleData$ = this.vinSearchControl.valueChanges.pipe(
       debounceTime(500),
       distinctUntilChanged(),
@@ -59,5 +56,20 @@ export class DashboardComponent implements OnInit {
   selectVehicle(id: any) {
     const vehicleId = Number(id);
     this.selectedVehicle = this.vehicles.find(v => v.id === vehicleId) || null;
+
+    
+    const vinMap: Record<number, string> = {
+      1: '2FRHDUYS2Y63NHD22454', 
+      2: '2RFAASDY54E4HDU34874', 
+      3: '2FRHDUYS2Y63NHD22455', 
+      4: '2RFAASDY54E4HDU34875' 
+    };
+
+    const vinCorrespondente = vinMap[vehicleId];
+
+    if (vinCorrespondente) {
+      
+      this.vinSearchControl.setValue(vinCorrespondente);
+    }
   }
 }

@@ -10,7 +10,7 @@ export interface Vehicle {
   volumetotal: number;
   connected: number;
   softwareUpdates: number;
-  img: string; // URL da imagem vindo da API
+  img: string; 
 }
 
 export interface VehicleData {

@@ -7,13 +7,16 @@ import { Vehicle, VehicleData } from '../models/type';
 export class VehicleService {
   private http = inject(HttpClient);
   private apiUrl = 'http://localhost:3001';
+  saveToken: any;
 
-  // Busca lista de veículos para o Dropdown
+  loginHome(nome: string, senha: string){
+    return this.http.post(this.apiUrl + 'login', { nome, senha });
+  }
+
   getVehicles(): Observable<{ vehicles: Vehicle[] }> {
     return this.http.get<{ vehicles: Vehicle[] }>(`${this.apiUrl}/vehicles`);
   }
 
-  // Busca dados específicos pelo VIN
   getVehicleDataByVin(vin: string): Observable<VehicleData> {
     return this.http.post<VehicleData>(`${this.apiUrl}/vehicleData`, { vin });
   }
