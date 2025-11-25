@@ -1,0 +1,16 @@
+<div class="vh-100 d-flex flex-column" style="background: url('assets/bg-home.jpg') no-repeat center center; background-size: cover;">
+  <nav class="navbar navbar-light bg-light px-4 opacity-75">
+    <a class="navbar-brand" href="#">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Ford_logo_flat.svg" width="60">
+    </a>
+    <button class="btn btn-outline-danger" (click)="logout()">Sair</button>
+  </nav>
+
+  <div class="flex-grow-1 d-flex align-items-center justify-content-center">
+    <div class="card p-5 text-center shadow-lg" style="width: 24rem; background-color: rgba(255,255,255,0.9);">
+      <h2 class="card-title text-primary">Bem-vindo ao Sistema Ford</h2>
+      <p class="card-text mt-3">Acesse o painel de gestão para visualizar dados da frota.</p>
+      <a routerLink="/dashboard" class="btn btn-primary mt-3 btn-lg">Acessar Dashboard</a>
+    </div>
+  </div>
+</div>

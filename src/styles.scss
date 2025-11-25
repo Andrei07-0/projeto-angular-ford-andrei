@@ -1,1 +1,45 @@
 /* You can add global styles to this file, and also import other style files */
+/* src/styles.scss */
+
+/* Variáveis de Cor (Identidade Ford) */
+:root {
+  --ford-blue: #003478;
+  --ford-light-blue: #4c96d7;
+  --ford-gray: #f2f2f2;
+}
+
+/* Fonte Global */
+body {
+  font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--ford-gray);
+  color: #333;
+}
+
+/* Override do Bootstrap Primary para ser o Azul Ford */
+.text-primary {
+  color: var(--ford-blue) !important;
+}
+
+.bg-primary {
+  background-color: var(--ford-blue) !important;
+}
+
+.btn-primary {
+  background-color: var(--ford-blue);
+  border-color: var(--ford-blue);
+  
+  &:hover {
+    background-color: #002350;
+    border-color: #002350;
+  }
+}
+
+/* Animação suave para entrada de elementos */
+.fade-in {
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

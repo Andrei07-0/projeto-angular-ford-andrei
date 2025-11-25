@@ -1,0 +1,117 @@
+<div class="container-fluid py-4 bg-light min-vh-100">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="text-primary fw-bold">Dashboard FORD</h2>
+    <a routerLink="/home" class="btn btn-outline-secondary btn-sm">Voltar</a>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-md-3">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title text-muted">Veículo</h5>
+          <select class="form-select mt-3" (change)="selectVehicle($any($event.target).value)">
+            <option *ngFor="let v of vehicles" [value]="v.id">{{ v.vehicle }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card h-100 shadow-sm border-start border-primary border-4">
+        <div class="card-body">
+          <h6 class="text-muted">Total de Vendas</h6>
+          <h3 class="text-primary fw-bold">{{ selectedVehicle?.volumetotal | number }}</h3>
+          <small class="text-muted">unidades</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card h-100 shadow-sm border-start border-info border-4">
+        <div class="card-body">
+          <h6 class="text-muted">Conectados</h6>
+          <h3 class="text-info fw-bold">{{ selectedVehicle?.connected | number }}</h3>
+          <small class="text-muted">veículos</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card h-100 shadow-sm border-start border-warning border-4">
+        <div class="card-body">
+          <h6 class="text-muted">Update Software</h6>
+          <h3 class="text-warning fw-bold">{{ selectedVehicle?.softwareUpdates | number }}</h3>
+          <small class="text-muted">veículos</small>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row my-5 justify-content-center">
+    <div class="col-md-8 text-center">
+      <div *ngIf="selectedVehicle" class="fade-in">
+        <img [src]="selectedVehicle.img" [alt]="selectedVehicle.vehicle" class="img-fluid" style="max-height: 350px;">
+        <h3 class="mt-3 text-dark">{{ selectedVehicle.vehicle }}</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="card shadow-sm mt-4">
+    <div class="card-header bg-primary text-white">
+      Consulta Telemetria
+    </div>
+    <div class="card-body">
+      <div class="mb-3">
+        <label class="form-label">Buscar por Código VIN:</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-search"></i></span>
+          <input type="text" [formControl]="vinSearchControl" class="form-control" placeholder="Ex: 2FRHDUYS2Y63NHD22454">
+        </div>
+        <small class="text-muted">Tente: 2FRHDUYS2Y63NHD22454</small>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-striped table-hover align-middle">
+          <thead class="table-dark">
+            <tr>
+              <th>ID</th>
+              <th>Odômetro</th>
+              <th>Combustível</th>
+              <th>Status</th>
+              <th>Latitude</th>
+              <th>Longitude</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="vehicleData$ | async as data; else loadingOrError">
+              <td>{{ data.id }}</td>
+              <td>{{ data.odometro | number }} km</td>
+              <td>
+                <div class="progress" style="height: 20px;">
+                  <div class="progress-bar" [style.width.%]="data.nivelCombustivel">
+                    {{ data.nivelCombustivel }}%
+                  </div>
+                </div>
+              </td>
+              <td>
+                <span class="badge" [ngClass]="data.status === 'on' ? 'bg-success' : 'bg-danger'">
+                  {{ data.status | uppercase }}
+                </span>
+              </td>
+              <td>{{ data.lat }}</td>
+              <td>{{ data.long }}</td>
+            </tr>
+            <ng-template #loadingOrError>
+              <tr *ngIf="searchError">
+                <td colspan="6" class="text-center text-danger">VIN não encontrado no sistema.</td>
+              </tr>
+              <tr *ngIf="!searchError && !(vehicleData$ | async)">
+                <td colspan="6" class="text-center text-muted">Digite um VIN válido para buscar.</td>
+              </tr>
+            </ng-template>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

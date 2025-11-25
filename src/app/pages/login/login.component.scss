@@ -1,0 +1,23 @@
+.img-fluid {
+  /* Garante que a imagem do carro na esquerda não estoure */
+  max-height: 400px;
+  object-fit: contain;
+}
+
+.form-control {
+  height: 50px; /* Campos mais altos para toque moderno */
+  border-radius: 8px;
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+
+  &:focus {
+    box-shadow: 0 0 0 0.25rem rgba(0, 52, 120, 0.25); /* Foco Azul Ford */
+    border-color: #4c96d7;
+  }
+}
+
+.btn {
+  height: 50px;
+  font-weight: 600;
+  border-radius: 8px;
+}
